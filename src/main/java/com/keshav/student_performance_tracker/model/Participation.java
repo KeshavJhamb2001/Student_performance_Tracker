@@ -2,6 +2,8 @@ package com.keshav.student_performance_tracker.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "participations")
 public class Participation {
@@ -9,7 +11,8 @@ public class Participation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @OneToMany(mappedBy = "participation", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Evaluation> evaluations;
     @ManyToOne
     @JoinColumn(name = "student_id")
     private User student;

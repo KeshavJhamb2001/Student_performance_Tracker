@@ -9,11 +9,12 @@ public class Evaluation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    // Participation = student + event
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "participation_id")
     private Participation participation;
+  /*  @OneToOne
+    @JoinColumn(name = "participation_id")*/
+
     private String grade;
     private int communication;
     private int leadership;
@@ -29,10 +30,10 @@ public class Evaluation {
         this.leadership = leadership;
         this.creativity = creativity;
         this.teamwork = teamwork;
-        this.totalScore = communication + leadership + creativity + teamwork;
+        recalculateTotal();
     }
 
-    // Getters and Setters
+    // Getters
     public Long getId() { return id; }
     public Participation getParticipation() { return participation; }
     public int getCommunication() { return communication; }
@@ -40,18 +41,34 @@ public class Evaluation {
     public int getCreativity() { return creativity; }
     public int getTeamwork() { return teamwork; }
     public int getTotalScore() { return totalScore; }
-    public String getGrade() {
-        return grade;
-    }
+    public String getGrade() { return grade; }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
+    // Setters
+    public void setGrade(String grade) { this.grade = grade; }
     public void setId(Long id) { this.id = id; }
     public void setParticipation(Participation participation) { this.participation = participation; }
-    public void setCommunication(int communication) { this.communication = communication; }
-    public void setLeadership(int leadership) { this.leadership = leadership; }
-    public void setCreativity(int creativity) { this.creativity = creativity; }
-    public void setTeamwork(int teamwork) { this.teamwork = teamwork; }
-    public void setTotalScore(int totalScore) { this.totalScore = totalScore; }
+
+    public void setCommunication(int communication) {
+        this.communication = communication;
+        recalculateTotal();
+    }
+    public void setLeadership(int leadership) {
+        this.leadership = leadership;
+        recalculateTotal();
+    }
+    public void setCreativity(int creativity) {
+        this.creativity = creativity;
+        recalculateTotal();
+    }
+    public void setTeamwork(int teamwork) {
+        this.teamwork = teamwork;
+        recalculateTotal();
+    }
+    public void setTotalScore(int totalScore) {
+        this.totalScore = totalScore;
+    }
+
+    private void recalculateTotal() {
+        this.totalScore = this.communication + this.leadership + this.creativity + this.teamwork;
+    }
 }

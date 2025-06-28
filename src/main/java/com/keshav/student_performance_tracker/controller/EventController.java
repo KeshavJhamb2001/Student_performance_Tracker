@@ -38,8 +38,15 @@ public class EventController {
         return ResponseEntity.ok(eventService.updateEvent(id, updated));
     }
 
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
+    public ResponseEntity<String> deleteEvent(
+            @PathVariable Long id,
+            @RequestParam(value = "force", defaultValue = "false") boolean force) {
+        if (eventService.hasParticipations(id) && !force) {
+            return ResponseEntity.status(409)
+                    .body("Warning: Students have participated in this event. Add '?force=true' to confirm deletion.");
+        }
         eventService.deleteEvent(id);
         return ResponseEntity.noContent().build();
     }

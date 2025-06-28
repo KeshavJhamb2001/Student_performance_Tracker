@@ -7,6 +7,8 @@ import com.keshav.student_performance_tracker.repository.ParticipationRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EvaluationService {
 
@@ -61,6 +63,12 @@ public class EvaluationService {
         evaluation.setGrade(calculateGrade(total));
 
         return evaluationRepository.save(evaluation);
+    }
+    public List<Evaluation> getEvaluationsByStudentId(Long studentId) {
+        return evaluationRepository.findByParticipation_Student_Id(studentId);
+    }
+    public List<Evaluation> getEvaluationsByEventId(Long eventId) {
+        return evaluationRepository.findByParticipation_Event_Id(eventId);
     }
 
 
