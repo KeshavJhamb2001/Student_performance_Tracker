@@ -1,0 +1,22 @@
+<!-- src/main/resources/templates/student_registered_events.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registered Events</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h2>Your Registered Events</h2>
+<table>
+    <tr>
+        <th>Event</th>
+        <th>Status</th>
+    </tr>
+    <tr th:each="p : ${participations}">
+        <td th:text="${p.event.title}"></td>
+        <td th:text="${p.status}"></td>
+    </tr>
+</table>
+<a th:href="@{/dashboard}">Back to Dashboard</a>
+</body>
+</html>

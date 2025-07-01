@@ -42,6 +42,14 @@ public class Evaluation {
     public int getTeamwork() { return teamwork; }
     public int getTotalScore() { return totalScore; }
     public String getGrade() { return grade; }
+    private void calculateGrade() {
+        if (this.totalScore >= 17) this.grade = "A+";
+        else if (this.totalScore >= 14) this.grade = "A";
+        else if (this.totalScore >= 12) this.grade = "B+";
+        else if (this.totalScore >= 10) this.grade = "B";
+        else if (this.totalScore >= 8) this.grade = "C";
+        else this.grade = "E";
+    }
 
     // Setters
     public void setGrade(String grade) { this.grade = grade; }
@@ -70,5 +78,6 @@ public class Evaluation {
 
     private void recalculateTotal() {
         this.totalScore = this.communication + this.leadership + this.creativity + this.teamwork;
+        calculateGrade();
     }
 }

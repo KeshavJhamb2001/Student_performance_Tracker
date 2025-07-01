@@ -1,0 +1,22 @@
+<!-- update_evaluation.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/style.css}" />.
+<head>
+    <title>Update Evaluation</title>
+</head>
+<body>
+<a th:href="@{/teacher/dashboard}" class="back-link" style="display:inline-block;margin-bottom:15px;">&larr; Back to Dashboard</a>
+
+<h2>Update Evaluation</h2>
+<form th:action="@{/teacher/update-evaluation}" method="post" th:object="${evaluation}">
+    <input type="hidden" th:field="*{id}" />
+    <label>Communication: <input type="number" th:field="*{communication}" /></label><br/>
+    <label>Leadership: <input type="number" th:field="*{leadership}" /></label><br/>
+    <label>Creativity: <input type="number" th:field="*{creativity}" /></label><br/>
+    <label>Teamwork: <input type="number" th:field="*{teamwork}" /></label><br/>
+    <label>Grade: <input type="text" th:field="*{grade}" /></label><br/>
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>

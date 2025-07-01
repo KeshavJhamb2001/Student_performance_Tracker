@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f4f8fb;
+            color: #222;
+        }
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 230px;
+            background: linear-gradient(135deg, #2d6cdf 70%, #6ec6ff 100%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2em 1em 1em 1em;
+            box-shadow: 2px 0 12px #0001;
+        }
+        .sidebar h2 {
+            margin: 0 0 1.5em 0;
+            font-size: 1.5em;
+            letter-spacing: 1px;
+        }
+        .sidebar .role {
+            font-size: 1em;
+            margin-bottom: 2em;
+            opacity: 0.85;
+        }
+        .logout-btn {
+            margin-top: auto;
+            background: #fff;
+            color: #2d6cdf;
+            border: none;
+            border-radius: 6px;
+            padding: 0.7em 2em;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #0002;
+            transition: background 0.2s, color 0.2s;
+        }
+        .logout-btn:hover {
+            background: #e3f0ff;
+            color: #174a8c;
+        }
+        .main-content {
+            flex: 1;
+            padding: 3em 4em;
+        }
+        .main-content header h1 {
+            margin: 0 0 0.5em 0;
+            color: #2d6cdf;
+            font-size: 2.2em;
+        }
+        .dashboard-cards {
+            display: flex;
+            gap: 2em;
+            margin: 2em 0 2em 0;
+        }
+        .dashboard-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px #2d6cdf22;
+            padding: 2em 1.5em;
+            flex: 1;
+            min-width: 200px;
+            transition: box-shadow 0.2s;
+        }
+        .dashboard-card:hover {
+            box-shadow: 0 4px 24px #2d6cdf33;
+        }
+        .dashboard-card a {
+            color: #2d6cdf;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .dashboard-card p {
+            color: #555;
+            margin-top: 0.7em;
+        }
+        section h3 {
+            color: #174a8c;
+            margin-bottom: 0.5em;
+        }
+        section ul {
+            list-style: disc inside;
+            color: #2d6cdf;
+            padding-left: 1.2em;
+        }
+        section ul li a {
+            color: #174a8c;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+    <nav class="sidebar">
+        <div class="email" style="margin-bottom:1em;">
+            <strong>Email:</strong>
+            <span th:text="${user.email}">teacher@example.com</span>
+        </div>
+        <div class="role">Role: <span th:text="${user.role}">TEACHER</span></div>
+        <button class="logout-btn" id="logoutBtn">Logout</button>
+    </nav>
+    <div class="main-content">
+        <header>
+            <h1>
+                <span style="color: #000;">Welcome, </span>
+                <span th:text="${user.name}" style="color: #000;">Teacher</span>
+                <span style="color: #000;">!</span>
+            </h1>
+            <div style="color:#000000; font-size:1.1em;">Your personalized dashboard</div>
+        </header>
+        <h2 style="color:#174a8c; margin-top:2em;">Your Dashboard</h2>
+        <!-- Dashboard Cards with Emojis -->
+        <div class="dashboard-cards">
+            <div class="dashboard-card">
+                <a th:href="@{/teacher/events}">📅 Manage Events</a>
+                <p>Create, view, or delete events</p>
+            </div>
+            <div class="dashboard-card">
+                <a th:href="@{/teacher/participations}">👥 View Participations</a>
+                <p>See and evaluate student participations</p>
+            </div>
+            <div class="dashboard-card">
+                <a th:href="@{/teacher/evaluations}">📝 View Evaluations</a>
+                <p>Review all student evaluations</p>
+            </div>
+        </div>
+        <section>
+            <h3>Quick Actions</h3>
+            <ul>
+                <li><a th:href="@{/teacher/create-event}">➕ Create New Event</a></li>
+                <li><a th:href="@{/teacher/participations}">✅ Evaluate Students</a></li>
+            </ul>
+        </section>
+    </div>
+</div>
+<script>
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+        window.location.href = '/';
+    });
+</script>
+</body>
+</html>

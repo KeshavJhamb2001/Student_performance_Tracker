@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <meta charset="UTF-8">
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f7fb;
+      min-height: 100vh;
+      display: flex;
+    }
+    .sidebar {
+      width: 220px;
+      background: #2d6cdf;
+      color: #fff;
+      min-height: 100vh;
+      padding: 2em 1em 1em 1em;
+      box-shadow: 2px 0 12px rgba(44,108,223,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+    }
+    .sidebar h2 {
+      font-size: 1.4em;
+      margin-bottom: 1.5em;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+    }
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.1em;
+      padding: 0.7em 1em;
+      border-radius: 6px;
+      transition: background 0.18s;
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      background: #1b4fa0;
+    }
+    .main-content {
+      margin-left: 240px;
+      padding: 2.5em 2em;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 2em;
+    }
+    header h1 {
+      font-size: 2em;
+      color: #2d6cdf;
+      margin: 0 0 0.3em 0;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(44,108,223,0.07);
+      padding: 2em 2.5em;
+      margin-bottom: 2em;
+      max-width: 500px;
+    }
+    .card p {
+      font-size: 1.1em;
+      color: #444;
+      margin: 0.7em 0;
+    }
+    .actions {
+      display: flex;
+      gap: 1em;
+      margin-top: 1.5em;
+    }
+    .btn {
+      background: #2d6cdf;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.8em 2em;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(44,108,223,0.10);
+      transition: background 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn:hover {
+      background: #1b4fa0;
+    }
+    .logout-btn {
+      margin-top: 12em;
+      background: #fff;
+      color: #2d6cdf;
+      border: 1.5px solid #2d6cdf;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s;
+    }
+    .logout-btn:hover {
+      background: #2d6cdf;
+      color: #fff;
+    }
+    @media (max-width: 900px) {
+      .sidebar {
+        width: 60px;
+        padding: 1em 0.5em;
+      }
+      .sidebar h2 {
+        display: none;
+      }
+      .nav-links a span {
+        display: none;
+      }
+      .main-content {
+        margin-left: 80px;
+        padding: 1.5em 0.7em;
+      }
+      .card {
+        padding: 1.2em 1em;
+      }
+    }
+    @media (max-width: 600px) {
+      .sidebar {
+        display: none;
+      }
+      .main-content {
+        margin-left: 0;
+        padding: 1em 0.3em;
+      }
+      .card {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+<nav class="sidebar">
+  <h2>Student</h2>
+  <div class="nav-links">
+    <a th:href="@{/student/events}" class="active"><span>📅</span><span>Join Event</span></a>
+    <a th:href="@{/student/registered-events}"><span>🗂️</span><span>My Events</span></a>
+    <a th:href="@{/student/evaluations}"><span>📊</span><span>My Evaluations</span></a>
+  </div>
+  <button id="logoutBtn" class="btn logout-btn">Logout</button>
+</nav>
+<div class="main-content">
+  <header>
+    <h1>
+      <span style="color: #000;">Welcome, </span>
+      <span th:text="${user.name}" style="color: #000;">Student Name</span>
+      <span style="color: #000;">!</span>
+    </h1>
+    <div style="color:#000000; font-size:1.1em;">Your personalized dashboard</div>
+
+  </header>
+  <div class="card">
+    <p><strong>Email:</strong> <span th:text="${user.email}">student@example.com</span></p>
+    <p><strong>Role:</strong> <span th:text="${user.role}">STUDENT</span></p>
+    <!-- Add more dashboard content here -->
+  </div>
+  <div class="actions">
+    <a th:href="@{/student/events}" class="btn">Join Event</a>
+    <a th:href="@{/student/registered-events}" class="btn">My Events</a>
+    <a th:href="@{/student/evaluations}" class="btn">My Evaluations</a>
+  </div>
+</div>
+<script>
+  document.getElementById('logoutBtn').addEventListener('click', function() {
+    window.location.href = '/';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login - Student Performance Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(120deg, #2d6cdf 0%, #6ec6ff 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        header {
+            text-align: center;
+            color: #fff;
+            margin-top: 2em;
+            margin-bottom: 1em;
+        }
+        .container {
+            max-width: 400px;
+            margin: 2em auto;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(44,108,223,0.13);
+            padding: 2.5em 2em 2em 2em;
+            position: relative;
+        }
+        .side-emoji {
+            position: absolute;
+            top: 20px;
+            right: -80px;
+            font-size: 4em;
+            filter: drop-shadow(0 2px 8px rgba(44,108,223,0.15));
+            user-select: none;
+            pointer-events: none;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2em;
+        }
+        label {
+            font-weight: 600;
+            color: #2d6cdf;
+        }
+        input[type="text"], input[type="password"] {
+            padding: 0.7em;
+            border: 1px solid #b3c6e0;
+            border-radius: 6px;
+            font-size: 1em;
+            background: #f6f8fa;
+            transition: border 0.2s;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            border: 1.5px solid #2d6cdf;
+            outline: none;
+        }
+        .btn {
+            background: #2d6cdf;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 0.8em 0;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(44,108,223,0.10);
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #1b4fa0;
+        }
+        p {
+            text-align: center;
+            margin-top: 1.5em;
+            color: #555;
+        }
+        a {
+            color: #2d6cdf;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 700px) {
+            .side-emoji {
+                display: none;
+            }
+            .container {
+                margin: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>🔐 Login to Your Account</h1>
+    <h2 style="font-size:1.1em; font-weight:400; margin-top:0.5em;">Welcome back to the Student Performance Tracker! 🎓</h2>
+</header>
+<div class="container">
+
+    <form th:action="@{/login}" method="post">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+
+        <button type="submit" class="btn">Login</button>
+    </form>
+    <p>Don't have an account? <a th:href="@{/register}">Register</a></p>
+</div>
+</body>
+</html>

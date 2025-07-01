@@ -1,0 +1,33 @@
+<!-- src/main/resources/templates/student_evaluations.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Your Evaluations</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h2>Your Evaluations</h2>
+<table>
+    <tr>
+        <th>Event</th>
+        <th>Grade</th>
+        <th>Communication</th>
+        <th>Leadership</th>
+        <th>Creativity</th>
+        <th>Teamwork</th>
+        <th>Total Score</th>
+    </tr>
+    <tr th:each="e : ${evaluations}">
+        <td th:text="${e.participation.event.title}"></td>
+        <td th:text="${e.grade}"></td>
+        <td th:text="${e.communication}"></td>
+        <td th:text="${e.leadership}"></td>
+        <td th:text="${e.creativity}"></td>
+        <td th:text="${e.teamwork}"></td>
+        <td th:text="${e.totalScore}"></td>
+    </tr>
+</table>
+<a th:href="@{/student/evaluation-report}" class="btn">Download Evaluation Report</a>
+<a th:href="@{/dashboard}">Back to Dashboard</a>
+</body>
+</html>

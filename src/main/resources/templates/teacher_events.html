@@ -1,0 +1,30 @@
+<!-- teacher_events.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/style.css}" />.
+<head>
+    <title>Teacher Events</title>
+</head>
+<body>
+<a th:href="@{/teacher/dashboard}" class="back-link" style="display:inline-block;margin-bottom:15px;">&larr; Back to Dashboard</a>
+
+<h2>All Events</h2>
+<a th:href="@{/teacher/create-event}">Create New Event</a>
+<table>
+    <tr>
+        <th>Title</th><th>Type</th><th>Description</th><th>Action</th>
+    </tr>
+    <tr th:each="event : ${events}">
+        <td th:text="${event.title}"></td>
+        <td th:text="${event.type}"></td>
+        <td th:text="${event.description}"></td>
+        <td>
+            <form th:action="@{/teacher/delete-event}" method="post">
+                <input type="hidden" name="eventId" th:value="${event.id}" />
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

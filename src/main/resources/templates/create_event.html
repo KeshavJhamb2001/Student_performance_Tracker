@@ -1,0 +1,19 @@
+<!-- create_event.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/style.css}" />.
+<head>
+    <title>Create Event</title>
+</head>
+<body>
+<a th:href="@{/teacher/dashboard}" class="back-link" style="display:inline-block;margin-bottom:15px;">&larr; Back to Dashboard</a>
+
+<h2>Create Event</h2>
+<form th:action="@{/teacher/create-event}" th:object="${event}" method="post">
+    <label>Title: <input type="text" th:field="*{title}" /></label><br/>
+    <label>Type: <input type="text" th:field="*{type}" /></label><br/>
+    <label>Description: <input type="text" th:field="*{description}" /></label><br/>
+    <button type="submit">Create</button>
+</form>
+</body>
+</html>

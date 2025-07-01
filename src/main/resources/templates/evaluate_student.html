@@ -1,0 +1,23 @@
+<!-- evaluate_student.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/style.css}" />.
+<head>
+    <title>Evaluate Student</title>
+</head>
+<body>
+<body>
+<a th:href="@{/teacher/dashboard}" class="back-link" style="display:inline-block;margin-bottom:15px;">&larr; Back to Dashboard</a>
+
+<h2>Evaluate Student</h2>
+<form th:action="@{/teacher/evaluate}" method="post" th:object="${evaluation}">
+    <input type="hidden" name="participationId" th:value="${participationId}" />
+    <label>Communication: <input type="number" th:field="*{communication}" /></label><br/>
+    <label>Leadership: <input type="number" th:field="*{leadership}" /></label><br/>
+    <label>Creativity: <input type="number" th:field="*{creativity}" /></label><br/>
+    <label>Teamwork: <input type="number" th:field="*{teamwork}" /></label><br/>
+
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

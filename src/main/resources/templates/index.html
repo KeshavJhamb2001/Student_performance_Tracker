@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}">Student Performance Tracker</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<header>
+    <h1 th:text="${title}">Student Participation & Performance Tracker</h1>
+    <h2>📊 Empowering Students, Teachers & Institutions</h2>
+</header>
+<div class="container">
+    <p>
+        Welcome to the <strong>Student Participation & Performance Tracker</strong>! 🎓<br>
+        Track, analyze, and improve student engagement and achievements in real time.
+    </p>
+    <ul>
+        <li>📝 Register and log in to your dashboard</li>
+        <li>🎯 Monitor participation in events and activities</li>
+        <li>🏆 Evaluate performance with detailed analytics</li>
+        <li>📈 Visualize progress and celebrate success</li>
+    </ul>
+    <div style="margin-top: 2em;">
+        <a th:href="@{/register}" class="btn">Register</a>
+        <a th:href="@{/login}" class="btn">Login</a>
+    </div>
+</div>
+<footer style="margin-top: 3em; text-align: center; color: #888;">
+    Made with ❤️ by Keshav_2101667 for real-world student success.
+</footer>
+</body>
+</html>

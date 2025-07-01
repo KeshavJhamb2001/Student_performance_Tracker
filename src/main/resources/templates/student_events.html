@@ -1,0 +1,37 @@
+<!-- src/main/resources/templates/student_events.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Available Events</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h2>Available Events</h2>
+<div th:if="${errorMessage}" style="color:#d32f2f; font-weight:bold;">
+    <span th:text="${errorMessage}"></span>
+</div>
+<div th:if="${successMessage}" style="color:#388e3c; font-weight:bold;">
+    <span th:text="${successMessage}"></span>
+</div>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="event : ${events}">
+        <td th:text="${event.title}"></td>
+        <td th:text="${event.type}"></td>
+        <td th:text="${event.description}"></td>
+        <td>
+            <form th:action="@{/student/join-event}" method="post">
+                <input type="hidden" name="eventId" th:value="${event.id}" />
+                <button type="submit">Join</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a th:href="@{/dashboard}">Back to Dashboard</a>
+</body>
+</html>

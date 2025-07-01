@@ -1,0 +1,28 @@
+<!-- teacher_evaluations.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" th:href="@{/css/style.css}" />.
+    <title>All Evaluations</title>
+</head>
+<body>
+<a th:href="@{/teacher/dashboard}" class="back-link" style="display:inline-block;margin-bottom:15px;">&larr; Back to Dashboard</a>
+
+<h2>All Evaluations</h2>
+<table>
+    <tr>
+        <th>Student</th><th>Event</th><th>Grade</th><th>Comm</th><th>Lead</th><th>Creat</th><th>Team</th><th>Total</th>
+    </tr>
+    <tr th:each="eval : ${evaluations}">
+        <td th:text="${eval.participation.student.name}"></td>
+        <td th:text="${eval.participation.event.title}"></td>
+        <td th:text="${eval.grade}"></td>
+        <td th:text="${eval.communication}"></td>
+        <td th:text="${eval.leadership}"></td>
+        <td th:text="${eval.creativity}"></td>
+        <td th:text="${eval.teamwork}"></td>
+        <td th:text="${eval.totalScore}"></td>
+    </tr>
+</table>
+</body>
+</html>
