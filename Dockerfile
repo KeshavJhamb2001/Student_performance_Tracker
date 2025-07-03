@@ -11,4 +11,4 @@ COPY target/Student_performance_Tracker-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 
 # Entry point
-CMD ["java", "-jar", "Student_Performance_Tracker-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/Student_Performance_Tracker-0.0.1-SNAPSHOT.jar"]
