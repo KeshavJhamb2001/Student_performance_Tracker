@@ -1,155 +1,284 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Teacher Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <title>Teacher Dashboard - Student Tracker</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #f4f8fb;
-            color: #222;
+            padding: 0;
         }
-        .dashboard-container {
-            display: flex;
-            min-height: 100vh;
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f4f8;
+            color: #2c3e50;
         }
-        .sidebar {
-            width: 230px;
-            background: linear-gradient(135deg, #2d6cdf 70%, #6ec6ff 100%);
-            color: #fff;
+
+        .navbar {
+            background: #1e88e5;
+            color: white;
+            padding: 1em 2em;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            padding: 2em 1em 1em 1em;
-            box-shadow: 2px 0 12px #0001;
+            flex-wrap: wrap;
+            position: relative;
         }
-        .sidebar h2 {
-            margin: 0 0 1.5em 0;
+
+        .title {
             font-size: 1.5em;
-            letter-spacing: 1px;
-        }
-        .sidebar .role {
-            font-size: 1em;
-            margin-bottom: 2em;
-            opacity: 0.85;
-        }
-        .logout-btn {
-            margin-top: auto;
-            background: #fff;
-            color: #2d6cdf;
-            border: none;
-            border-radius: 6px;
-            padding: 0.7em 2em;
             font-weight: 600;
-            font-size: 1em;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 1em;
+            position: relative;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png') center/cover no-repeat;
+            border: 2px solid white;
             cursor: pointer;
-            box-shadow: 0 2px 8px #0002;
-            transition: background 0.2s, color 0.2s;
         }
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background: #fff;
+            color: #333;
+            border-radius: 8px;
+            padding: 1em;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 280px;
+            z-index: 10;
+            word-break: break-word;
+        }
+
+        .profile-dropdown div {
+            margin-bottom: 0.5em;
+        }
+
+        .profile-dropdown strong {
+            display: inline-block;
+            width: 70px;
+        }
+
+        .logout-btn {
+            background: #e3f2fd;
+            color: #1e88e5;
+            border: none;
+            padding: 0.5em 1em;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 0.5em;
+        }
+
         .logout-btn:hover {
-            background: #e3f0ff;
-            color: #174a8c;
+            background: #bbdefb;
         }
-        .main-content {
-            flex: 1;
-            padding: 3em 4em;
+
+        .container {
+            padding: 2em 4em;
         }
-        .main-content header h1 {
-            margin: 0 0 0.5em 0;
-            color: #2d6cdf;
+
+        header h1 {
             font-size: 2.2em;
+            font-weight: 700;
+            color: #0d47a1;
+            text-shadow: 1px 1px 1px #cfd8dc;
+            margin-bottom: 0.3em;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            flex-wrap: wrap;
         }
+
+        .greeting {
+            color: #546e7a;
+            font-size: 1.1em;
+            margin-bottom: 2em;
+        }
+
         .dashboard-cards {
             display: flex;
-            gap: 2em;
-            margin: 2em 0 2em 0;
+            flex-wrap: wrap;
+            gap: 1.5em;
         }
+
         .dashboard-card {
             background: #fff;
             border-radius: 12px;
-            box-shadow: 0 2px 12px #2d6cdf22;
-            padding: 2em 1.5em;
-            flex: 1;
-            min-width: 200px;
-            transition: box-shadow 0.2s;
+            padding: 1.5em;
+            box-shadow: 0 4px 12px rgba(30, 136, 229, 0.1);
+            flex: 1 1 260px;
+            transition: 0.2s ease;
         }
+
         .dashboard-card:hover {
-            box-shadow: 0 4px 24px #2d6cdf33;
+            box-shadow: 0 6px 18px rgba(30, 136, 229, 0.2);
+            transform: translateY(-3px);
         }
+
         .dashboard-card a {
-            color: #2d6cdf;
-            font-size: 1.2em;
+            color: #1e88e5;
             font-weight: 600;
+            font-size: 1.15em;
             text-decoration: none;
         }
+
         .dashboard-card p {
+            margin-top: 0.5em;
             color: #555;
-            margin-top: 0.7em;
         }
-        section h3 {
-            color: #174a8c;
-            margin-bottom: 0.5em;
+
+        .quick-actions {
+            margin-top: 3em;
         }
-        section ul {
-            list-style: disc inside;
-            color: #2d6cdf;
-            padding-left: 1.2em;
+
+        .quick-actions h3 {
+            color: #0d47a1;
+            margin-bottom: 1em;
         }
-        section ul li a {
-            color: #174a8c;
-            text-decoration: underline;
+
+        .quick-boxes {
+            display: flex;
+            gap: 1.5em;
+            flex-wrap: wrap;
+        }
+
+        .quick-box {
+            flex: 1 1 260px;
+            background: #ffffff;
+            padding: 1.5em;
+            border-left: 5px solid #1e88e5;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(30, 136, 229, 0.07);
+        }
+
+        .quick-box a {
+            font-weight: 600;
+            color: #1e88e5;
+            font-size: 1.05em;
+            text-decoration: none;
+        }
+
+        .quick-box p {
+            color: #666;
+            margin-top: 0.5em;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5em;
+            }
+
+            .container {
+                padding: 2em 1em;
+            }
+
+            .dashboard-cards,
+            .quick-boxes {
+                flex-direction: column;
+            }
+
+            .profile-dropdown {
+                right: 10px;
+                width: 90vw;
+            }
         }
     </style>
 </head>
 <body>
-<div class="dashboard-container">
-    <nav class="sidebar">
-        <div class="email" style="margin-bottom:1em;">
-            <strong>Email:</strong>
-            <span th:text="${user.email}">teacher@example.com</span>
+
+<!-- ✅ Top Navigation Bar -->
+<nav class="navbar">
+    <div class="title">🎓 Teacher Dashboard</div>
+
+    <div class="profile-section">
+        <div class="profile-icon" onclick="toggleProfileDropdown()"></div>
+        <div class="profile-dropdown" id="profileDropdown">
+            <div><strong>Name:</strong> <span th:text="${user.name}">Vishal</span></div>
+            <div><strong>Email:</strong> <span th:text="${user.email}">vishal@example.com</span></div>
+            <div><strong>Role:</strong> <span th:text="${user.role}">TEACHER</span></div>
+            <button class="logout-btn" onclick="location.href='/'">Logout</button>
         </div>
-        <div class="role">Role: <span th:text="${user.role}">TEACHER</span></div>
-        <button class="logout-btn" id="logoutBtn">Logout</button>
-    </nav>
-    <div class="main-content">
-        <header>
-            <h1>
-                <span style="color: #000;">Welcome, </span>
-                <span th:text="${user.name}" style="color: #000;">Teacher</span>
-                <span style="color: #000;">!</span>
-            </h1>
-            <div style="color:#000000; font-size:1.1em;">Your personalized dashboard</div>
-        </header>
-        <h2 style="color:#174a8c; margin-top:2em;">Your Dashboard</h2>
-        <!-- Dashboard Cards with Emojis -->
+    </div>
+</nav>
+
+<!-- ✅ Main Dashboard Content -->
+<div class="container">
+    <header style="margin-bottom: 2em;">
+        <h1>👋 Welcome, <span th:text="${user.name}" style="color: #1e88e5;">Vishal</span></h1>
+        <div class="greeting">Let’s manage events, guide students, and track performance effectively.</div>
+    </header>
+
+    <section>
+        <h2 style="color:#0d47a1;">📊 Your Dashboard</h2><br>
         <div class="dashboard-cards">
             <div class="dashboard-card">
                 <a th:href="@{/teacher/events}">📅 Manage Events</a>
-                <p>Create, view, or delete events</p>
+                <p>Create and oversee student participation events.</p>
             </div>
             <div class="dashboard-card">
                 <a th:href="@{/teacher/participations}">👥 View Participations</a>
-                <p>See and evaluate student participations</p>
+                <p>Track and review student engagement in real time.</p>
             </div>
             <div class="dashboard-card">
                 <a th:href="@{/teacher/evaluations}">📝 View Evaluations</a>
-                <p>Review all student evaluations</p>
+                <p>Analyze student performance based on set rubrics.</p>
             </div>
         </div>
-        <section>
-            <h3>Quick Actions</h3>
-            <ul>
-                <li><a th:href="@{/teacher/create-event}">➕ Create New Event</a></li>
-                <li><a th:href="@{/teacher/participations}">✅ Evaluate Students</a></li>
-            </ul>
-        </section>
-    </div>
+    </section>
+
+    <!-- ✅ Quick Action Boxes -->
+    <section class="quick-actions">
+        <h3>⚡ Quick Actions</h3>
+        <div class="quick-boxes">
+            <div class="quick-box">
+                <a th:href="@{/teacher/create-event}">➕ Create New Event</a>
+                <p>Plan a new activity or competition for your students.</p>
+            </div>
+            <div class="quick-box">
+                <a th:href="@{/teacher/participations}">✅ Evaluate Students</a>
+                <p>Rate and comment on student contributions.</p>
+            </div>
+        </div>
+    </section>
 </div>
+
+<!-- ✅ Toggle profile dropdown -->
 <script>
-    document.getElementById('logoutBtn').addEventListener('click', function() {
-        window.location.href = '/';
+    function toggleProfileDropdown() {
+        const dropdown = document.getElementById("profileDropdown");
+        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    window.addEventListener("click", function(e) {
+        const profile = document.querySelector(".profile-icon");
+        const dropdown = document.getElementById("profileDropdown");
+        if (!profile.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.style.display = "none";
+        }
     });
 </script>
+
 </body>
 </html>

@@ -1,186 +1,240 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-
   <meta charset="UTF-8">
   <title>Student Dashboard</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f4f7fb;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: url('https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
       min-height: 100vh;
-      display: flex;
+      color: #2c3e50;
     }
-    .sidebar {
-      width: 220px;
-      background: #2d6cdf;
-      color: #fff;
-      min-height: 100vh;
-      padding: 2em 1em 1em 1em;
-      box-shadow: 2px 0 12px rgba(44,108,223,0.08);
-      display: flex;
-      flex-direction: column;
-      gap: 2em;
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-    }
-    .sidebar h2 {
-      font-size: 1.4em;
-      margin-bottom: 1.5em;
-      text-align: center;
-      letter-spacing: 1px;
-    }
-    .nav-links {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2em;
-    }
-    .nav-links a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 1.1em;
-      padding: 0.7em 1em;
-      border-radius: 6px;
-      transition: background 0.18s;
-      display: flex;
-      align-items: center;
-      gap: 0.7em;
-    }
-    .nav-links a:hover, .nav-links a.active {
-      background: #1b4fa0;
-    }
-    .main-content {
-      margin-left: 240px;
-      padding: 2.5em 2em;
+
+    .navbar {
       width: 100%;
+      background: rgba(0, 0, 0, 0.65);
+      color: #fff;
+      padding: 1em 2em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
+
+    .navbar .title {
+      font-size: 1.6em;
+      font-weight: 600;
+    }
+
+    .profile {
+      position: relative;
+      display: inline-block;
+    }
+
+    .profile img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid #fff;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 55px;
+      background-color: #ffffffee;
+      backdrop-filter: blur(15px);
+      min-width: 260px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+      padding: 1em;
+      z-index: 999;
+      white-space: normal;
+    }
+
+    .dropdown p {
+      color: #333;
+      margin-bottom: 0.5em;
+      font-size: 0.95em;
+      word-break: break-word;
+    }
+
+    .dropdown strong {
+      color: #2d6cdf;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 3em auto;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 2.5em;
+      border-radius: 18px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+
     header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
       margin-bottom: 2em;
     }
-    header h1 {
+
+    header h2 {
       font-size: 2em;
       color: #2d6cdf;
-      margin: 0 0 0.3em 0;
     }
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(44,108,223,0.07);
-      padding: 2em 2.5em;
-      margin-bottom: 2em;
-      max-width: 500px;
-    }
-    .card p {
-      font-size: 1.1em;
-      color: #444;
-      margin: 0.7em 0;
-    }
+
     .actions {
       display: flex;
       gap: 1em;
-      margin-top: 1.5em;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-radius: 12px;
+      padding: 0.5em;
+      background: rgba(255,255,255,0.05);
     }
+
     .btn {
-      background: #2d6cdf;
+      background: rgba(30, 58, 138, 0.8);
       color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 0.8em 2em;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 12px;
+      padding: 0.8em 1.7em;
       font-size: 1em;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(44,108,223,0.10);
-      transition: background 0.2s;
       text-decoration: none;
-      display: inline-block;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
     }
+
     .btn:hover {
-      background: #1b4fa0;
-    }
-    .logout-btn {
-      margin-top: 12em;
-      background: #fff;
-      color: #2d6cdf;
-      border: 1.5px solid #2d6cdf;
-      font-weight: 600;
-      transition: background 0.2s, color 0.2s;
-    }
-    .logout-btn:hover {
-      background: #2d6cdf;
+      background: rgba(255, 255, 255, 0.2);
       color: #fff;
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4);
+      transform: scale(1.02);
     }
-    @media (max-width: 900px) {
-      .sidebar {
-        width: 60px;
-        padding: 1em 0.5em;
-      }
-      .sidebar h2 {
-        display: none;
-      }
-      .nav-links a span {
-        display: none;
-      }
-      .main-content {
-        margin-left: 80px;
-        padding: 1.5em 0.7em;
-      }
-      .card {
-        padding: 1.2em 1em;
-      }
+
+    .info {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 1.5em 2em;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      margin-top: 1em;
     }
-    @media (max-width: 600px) {
-      .sidebar {
-        display: none;
+
+    .info p {
+      font-size: 1.1em;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .info ul {
+      padding-left: 1.2em;
+      margin-top: 1em;
+    }
+
+    .info ul li {
+      margin-bottom: 0.7em;
+      font-size: 1em;
+      color: #1e3a8a;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1em;
       }
-      .main-content {
-        margin-left: 0;
-        padding: 1em 0.3em;
+
+      .actions {
+        justify-content: flex-start;
       }
-      .card {
-        max-width: 100%;
+
+      .dropdown {
+        right: 10px;
+        left: auto;
       }
     }
   </style>
 </head>
 <body>
-<nav class="sidebar">
-  <h2>Student</h2>
-  <div class="nav-links">
-    <a th:href="@{/student/events}" class="active"><span>📅</span><span>Join Event</span></a>
-    <a th:href="@{/student/registered-events}"><span>🗂️</span><span>My Events</span></a>
-    <a th:href="@{/student/evaluations}"><span>📊</span><span>My Evaluations</span></a>
-  </div>
-  <button id="logoutBtn" class="btn logout-btn">Logout</button>
-</nav>
-<div class="main-content">
-  <header>
-    <h1>
-      <span style="color: #000;">Welcome, </span>
-      <span th:text="${user.name}" style="color: #000;">Student Name</span>
-      <span style="color: #000;">!</span>
-    </h1>
-    <div style="color:#000000; font-size:1.1em;">Your personalized dashboard</div>
 
-  </header>
-  <div class="card">
-    <p><strong>Email:</strong> <span th:text="${user.email}">student@example.com</span></p>
-    <p><strong>Role:</strong> <span th:text="${user.role}">STUDENT</span></p>
-    <!-- Add more dashboard content here -->
+<!-- ✅ Navbar -->
+<nav class="navbar">
+  <div class="title">🎓 Student Dashboard</div>
+  <div class="profile" onclick="toggleDropdown()">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile" />
+    <div class="dropdown" id="profileDropdown">
+      <p><strong>Name:</strong> <span th:text="${user.name}">Vishali</span></p>
+      <p><strong>Email:</strong> <span th:text="${user.email}">vishali@example.com</span></p>
+      <p><strong>Role:</strong> <span th:text="${user.role}">STUDENT</span></p><br>
+      <a href="/" class="btn" style="background:#e74c3c;">Logout</a>
+    </div>
   </div>
-  <div class="actions">
-    <a th:href="@{/student/events}" class="btn">Join Event</a>
-    <a th:href="@{/student/registered-events}" class="btn">My Events</a>
-    <a th:href="@{/student/evaluations}" class="btn">My Evaluations</a>
+</nav>
+
+<!-- ✅ Main Container -->
+<div class="container">
+  <header>
+    <h2>Welcome, <span th:text="${user.name}">Vishali</span>! 🎉</h2>
+    <div class="actions">
+      <a th:href="@{/student/events}" class="btn">📅 Join Event</a>
+      <a th:href="@{/student/registered-events}" class="btn">🗂️ My Events</a>
+      <a th:href="@{/student/evaluations}" class="btn">📊 My Evaluations</a>
+    </div>
+  </header>
+
+  <div class="info">
+    <p>
+      Welcome to your personalized <strong>Student Participation & Performance Dashboard</strong> — the hub of your student journey.
+    </p>
+    <p>
+      Here, you can explore exciting events, monitor your participation, and track your performance with ease. Everything is tailored to help you grow.
+    </p>
+
+    <ul>
+      <li>✅ <strong>Explore & Join Events:</strong> Discover competitions and activities you’re interested in</li>
+      <li>✅ <strong>Track Your Participations:</strong> Keep tabs on all your joined events</li>
+      <li>✅ <strong>View Evaluations & Grades:</strong> Get feedback and scores from your teachers</li>
+    </ul>
+
+    <p>
+      🌟 Stay curious, keep participating, and build your academic journey — one step at a time!
+    </p>
   </div>
 </div>
+
+<!-- ✅ Profile Dropdown Script -->
 <script>
-  document.getElementById('logoutBtn').addEventListener('click', function() {
-    window.location.href = '/';
-  });
+  function toggleDropdown() {
+    const dropdown = document.getElementById("profileDropdown");
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  }
+
+  window.onclick = function(event) {
+    if (!event.target.closest('.profile')) {
+      document.getElementById("profileDropdown").style.display = "none";
+    }
+  };
 </script>
+
 </body>
 </html>

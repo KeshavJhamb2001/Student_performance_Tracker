@@ -1,23 +1,151 @@
-<!-- teacher_participations.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" th:href="@{/css/style.css}" />.
 <head>
-    <title>Participations</title>
+    <meta charset="UTF-8" />
+    <title>Participations - Teacher Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f7fc;
+            color: #2c3e50;
+            padding: 2em;
+        }
+
+        h2 {
+            color: #1e88e5;
+            font-size: 2em;
+            margin-bottom: 1em;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #1e88e5;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1em;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5em;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            padding: 1em;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #e3f2fd;
+            color: #0d47a1;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td form,
+        td a {
+            margin-right: 10px;
+        }
+
+        button {
+            background: #ef5350;
+            color: white;
+            border: none;
+            padding: 0.5em 0.8em;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #d32f2f;
+        }
+
+        a {
+            color: #1e88e5;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            th {
+                display: none;
+            }
+
+            tr {
+                margin-bottom: 1em;
+                background: white;
+                border-radius: 6px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+                padding: 1em;
+            }
+
+            td {
+                padding: 0.8em 0.5em;
+                border-bottom: 1px solid #eee;
+                position: relative;
+            }
+
+            td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: #1e88e5;
+                display: block;
+                margin-bottom: 0.4em;
+            }
+        }
+    </style>
 </head>
 <body>
-<a th:href="@{/teacher/dashboard}" class="back-link" style="display:inline-block;margin-bottom:15px;">&larr; Back to Dashboard</a>
 
-<h2>All Participations</h2>
+<a th:href="@{/teacher/dashboard}" class="back-link">&larr; Back to Dashboard</a>
+
+<h2>👥 All Participations</h2>
+
 <table>
+    <thead>
     <tr>
-        <th>Student</th><th>Event</th><th>Status</th><th>Actions</th>
+        <th>Student</th>
+        <th>Event</th>
+        <th>Status</th>
+        <th>Actions</th>
     </tr>
+    </thead>
+    <tbody>
     <tr th:each="p : ${participations}">
-        <td th:text="${p.studentName}"></td>
-        <td th:text="${p.eventName}"></td>
-        <td th:text="${p.status}"></td>
-        <td>
+        <td th:text="${p.studentName}" data-label="Student"></td>
+        <td th:text="${p.eventName}" data-label="Event"></td>
+        <td th:text="${p.status}" data-label="Status"></td>
+        <td data-label="Actions">
             <form th:action="@{/teacher/delete-participation}" method="post" style="display:inline;">
                 <input type="hidden" name="participationId" th:value="${p.id}" />
                 <button type="submit">Delete</button>
@@ -25,6 +153,8 @@
             <a th:href="@{'/teacher/evaluate/' + ${p.id}}">Evaluate</a>
         </td>
     </tr>
+    </tbody>
 </table>
+
 </body>
 </html>

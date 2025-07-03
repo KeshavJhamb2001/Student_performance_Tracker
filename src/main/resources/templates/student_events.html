@@ -1,37 +1,180 @@
-<!-- src/main/resources/templates/student_events.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Available Events</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: url('https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 4em auto;
+            padding: 2.5em;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 18px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #2d6cdf;
+            margin-bottom: 1.5em;
+            text-align: center;
+        }
+
+        .alert {
+            padding: 1em;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 1.5em;
+        }
+
+        .error {
+            background-color: #ffcdd2;
+            color: #c62828;
+        }
+
+        .success {
+            background-color: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 1em;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: rgba(45, 108, 223, 0.95);
+            color: #fff;
+        }
+
+        tr:hover {
+            background-color: rgba(45, 108, 223, 0.05);
+        }
+
+        .btn {
+            background: #2d6cdf;
+            color: #fff;
+            padding: 0.6em 1.2em;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #1e40af;
+            transform: scale(1.03);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2em;
+            text-decoration: none;
+            color: #1e3a8a;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 0.5em 1em;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            th {
+                display: none;
+            }
+
+            td {
+                padding: 1em;
+                border-bottom: 1px solid #eee;
+            }
+
+            td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: block;
+                color: #2d6cdf;
+                margin-bottom: 0.4em;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
-<h2>Available Events</h2>
-<div th:if="${errorMessage}" style="color:#d32f2f; font-weight:bold;">
-    <span th:text="${errorMessage}"></span>
+
+<div class="container">
+    <h2>Available Events</h2>
+
+    <div th:if="${errorMessage}" class="alert error">
+        <span th:text="${errorMessage}">Error message here</span>
+    </div>
+
+    <div th:if="${successMessage}" class="alert success">
+        <span th:text="${successMessage}">Success message here</span>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="event : ${events}">
+            <td data-label="Title" th:text="${event.title}">Hackathon</td>
+            <td data-label="Type" th:text="${event.type}">Technical</td>
+            <td data-label="Description" th:text="${event.description}">Code and win!</td>
+            <td data-label="Action">
+                <form th:action="@{/student/join-event}" method="post">
+                    <input type="hidden" name="eventId" th:value="${event.id}" />
+                    <button type="submit" class="btn">Join</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/dashboard}" class="back-link">&larr; Back to Dashboard</a>
 </div>
-<div th:if="${successMessage}" style="color:#388e3c; font-weight:bold;">
-    <span th:text="${successMessage}"></span>
-</div>
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Action</th>
-    </tr>
-    <tr th:each="event : ${events}">
-        <td th:text="${event.title}"></td>
-        <td th:text="${event.type}"></td>
-        <td th:text="${event.description}"></td>
-        <td>
-            <form th:action="@{/student/join-event}" method="post">
-                <input type="hidden" name="eventId" th:value="${event.id}" />
-                <button type="submit">Join</button>
-            </form>
-        </td>
-    </tr>
-</table>
-<a th:href="@{/dashboard}">Back to Dashboard</a>
+
 </body>
 </html>

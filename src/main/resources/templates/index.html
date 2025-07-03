@@ -2,31 +2,161 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="${title}">Student Performance Tracker</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #e1bee7);
+            color: #212121;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 20px;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #37474f;
+            margin-bottom: 0.3em;
+        }
+
+        header h2 {
+            font-size: 1.2em;
+            font-weight: 400;
+            color: #607d8b;
+        }
+
+        .container {
+            background: #ffffffcc;
+            max-width: 650px;
+            margin: 30px auto;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .container p {
+            font-size: 1.08em;
+            line-height: 1.6;
+            margin-bottom: 1.2em;
+            color: #444;
+        }
+
+        .container ul {
+            list-style: none;
+            padding-left: 0;
+            text-align: left;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .container li {
+            padding-left: 1.2em;
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .container li::before {
+            content: '✔';
+            position: absolute;
+            left: 0;
+            color: #7b1fa2;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 12px 10px 0 10px;
+            padding: 12px 28px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 30px;
+            background-color: #7b1fa2;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #6a1b9a;
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            color: #555;
+            font-size: 0.95em;
+            margin-top: auto;
+            padding: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px 20px;
+                margin: 20px 10px;
+            }
+
+            .btn {
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
 </head>
+
 <body>
+
 <header>
     <h1 th:text="${title}">Student Participation & Performance Tracker</h1>
     <h2>📊 Empowering Students, Teachers & Institutions</h2>
 </header>
+
 <div class="container">
     <p>
-        Welcome to the <strong>Student Participation & Performance Tracker</strong>! 🎓<br>
+        Welcome to the <strong>Student Participation & Performance Tracker</strong>! 🎓<br><br>
         Track, analyze, and improve student engagement and achievements in real time.
     </p>
+
     <ul>
         <li>📝 Register and log in to your dashboard</li>
         <li>🎯 Monitor participation in events and activities</li>
-        <li>🏆 Evaluate performance with detailed analytics</li>
-        <li>📈 Visualize progress and celebrate success</li>
+        <li>🏆 Evaluate performance with smart analytics</li>
+        <li>📈 Visualize growth and celebrate success</li>
     </ul>
-    <div style="margin-top: 2em;">
-        <a th:href="@{/register}" class="btn">Register</a>
-        <a th:href="@{/login}" class="btn">Login</a>
+
+    <div>
+        <a th:href="@{/register}" class="btn">🚀 Register</a>
+        <a th:href="@{/login}" class="btn">🔐 Login</a>
     </div>
 </div>
-<footer style="margin-top: 3em; text-align: center; color: #888;">
-    Made with ❤️ by Keshav_2101667 for real-world student success.
+
+<footer>
+    Made with ❤️ by <strong>Keshav_2101667</strong><br/>
+    &copy; 2025 Student Performance Tracker
 </footer>
+
 </body>
 </html>

@@ -2,6 +2,7 @@
 package com.keshav.student_performance_tracker.controller;
 
 import com.keshav.student_performance_tracker.dto.ParticipationResponseDTO;
+import com.keshav.student_performance_tracker.service.EvaluationService;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import com.keshav.student_performance_tracker.model.Evaluation;
@@ -14,6 +15,7 @@ import com.keshav.student_performance_tracker.repository.UserRepository;
 import com.keshav.student_performance_tracker.service.ParticipationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +35,7 @@ public class DashboardController {
     private EvaluationRepository evaluationRepository;
     @Autowired
     private UserRepository userRepository;
+    // In your StudentDashboardController
 
     @GetMapping("/dashboard")
     public String dashboard(Authentication authentication, Model model) {
@@ -113,6 +116,10 @@ public String joinEvent(@RequestParam Long eventId, Authentication authenticatio
         response.setHeader("Content-Disposition", "attachment; filename=\"evaluation_report.csv\"");
 
         PrintWriter writer = response.getWriter();
+        // Add student name and ID at the top
+        writer.println("Student Name:," + user.getName());
+        writer.println("Student ID:," + user.getId());
+        writer.println();
         writer.println("Event Name,Grade,Communication,Leadership,Creativity,Teamwork,Total Score");
         for (Evaluation eval : evaluations) {
             String eventName = eval.getParticipation().getEvent().getTitle();

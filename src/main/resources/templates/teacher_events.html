@@ -1,30 +1,158 @@
-<!-- teacher_events.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" th:href="@{/css/style.css}" />.
 <head>
     <title>Teacher Events</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f7fc;
+            color: #333;
+            padding: 2em;
+        }
+
+        h2 {
+            color: #1e88e5;
+            font-size: 2em;
+            margin-bottom: 1em;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #1e88e5;
+            font-weight: 600;
+            margin-bottom: 1em;
+            display: inline-block;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        a.create-btn {
+            background: #1e88e5;
+            color: white;
+            padding: 0.6em 1.2em;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transition: background 0.2s;
+        }
+
+        a.create-btn:hover {
+            background: #0d47a1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5em;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            padding: 1em;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #e3f2fd;
+            color: #0d47a1;
+        }
+
+        td:last-child {
+            text-align: center;
+        }
+
+        button {
+            background: #e53935;
+            color: white;
+            border: none;
+            padding: 0.5em 1em;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #c62828;
+        }
+
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            th {
+                display: none;
+            }
+
+            td {
+                padding: 1em 0.5em;
+                border-bottom: 1px solid #ddd;
+                position: relative;
+            }
+
+            td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: #1e88e5;
+                display: block;
+                margin-bottom: 0.5em;
+            }
+
+            td:last-child {
+                text-align: left;
+            }
+        }
+    </style>
 </head>
 <body>
-<a th:href="@{/teacher/dashboard}" class="back-link" style="display:inline-block;margin-bottom:15px;">&larr; Back to Dashboard</a>
 
-<h2>All Events</h2>
-<a th:href="@{/teacher/create-event}">Create New Event</a>
+<a th:href="@{/teacher/dashboard}" class="back-link">&larr; Back to Dashboard</a>
+
+<h2>📅 All Events</h2>
+
+<a th:href="@{/teacher/create-event}" class="create-btn">+ Create New Event</a>
+
 <table>
+    <thead>
     <tr>
-        <th>Title</th><th>Type</th><th>Description</th><th>Action</th>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Action</th>
     </tr>
+    </thead>
+    <tbody>
     <tr th:each="event : ${events}">
-        <td th:text="${event.title}"></td>
-        <td th:text="${event.type}"></td>
-        <td th:text="${event.description}"></td>
-        <td>
+        <td th:text="${event.title}" data-label="Title"></td>
+        <td th:text="${event.type}" data-label="Type"></td>
+        <td th:text="${event.description}" data-label="Description"></td>
+        <td data-label="Action">
             <form th:action="@{/teacher/delete-event}" method="post">
                 <input type="hidden" name="eventId" th:value="${event.id}" />
                 <button type="submit">Delete</button>
             </form>
         </td>
     </tr>
+    </tbody>
 </table>
+
 </body>
 </html>

@@ -1,33 +1,144 @@
-<!-- src/main/resources/templates/student_evaluations.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Your Evaluations</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: url('https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 4em auto;
+            padding: 2.5em;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 18px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #2d6cdf;
+            margin-bottom: 1.5em;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 1em;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: rgba(45, 108, 223, 0.95);
+            color: #fff;
+        }
+
+        tr:hover {
+            background-color: rgba(45, 108, 223, 0.05);
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 2em 1em 0 0;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: #1e3a8a;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 0.7em 1.5em;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: #2d6cdf;
+        }
+
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            th {
+                display: none;
+            }
+
+            td {
+                padding: 1em;
+                border-bottom: 1px solid #eee;
+            }
+
+            td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: block;
+                color: #2d6cdf;
+                margin-bottom: 0.4em;
+            }
+        }
+    </style>
 </head>
 <body>
-<h2>Your Evaluations</h2>
-<table>
-    <tr>
-        <th>Event</th>
-        <th>Grade</th>
-        <th>Communication</th>
-        <th>Leadership</th>
-        <th>Creativity</th>
-        <th>Teamwork</th>
-        <th>Total Score</th>
-    </tr>
-    <tr th:each="e : ${evaluations}">
-        <td th:text="${e.participation.event.title}"></td>
-        <td th:text="${e.grade}"></td>
-        <td th:text="${e.communication}"></td>
-        <td th:text="${e.leadership}"></td>
-        <td th:text="${e.creativity}"></td>
-        <td th:text="${e.teamwork}"></td>
-        <td th:text="${e.totalScore}"></td>
-    </tr>
-</table>
-<a th:href="@{/student/evaluation-report}" class="btn">Download Evaluation Report</a>
-<a th:href="@{/dashboard}">Back to Dashboard</a>
+<div class="container">
+    <h2>Your Evaluations</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Event</th>
+            <th>Grade</th>
+            <th>Communication</th>
+            <th>Leadership</th>
+            <th>Creativity</th>
+            <th>Teamwork</th>
+            <th>Total Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="e : ${evaluations}">
+            <td data-label="Event" th:text="${e.participation.event.title}">Sample Event</td>
+            <td data-label="Grade" th:text="${e.grade}">A</td>
+            <td data-label="Communication" th:text="${e.communication}">4</td>
+            <td data-label="Leadership" th:text="${e.leadership}">5</td>
+            <td data-label="Creativity" th:text="${e.creativity}">5</td>
+            <td data-label="Teamwork" th:text="${e.teamwork}">4</td>
+            <td data-label="Total" th:text="${e.totalScore}">18</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/student/evaluation-report}" class="btn">📥 Download Evaluation Report</a>
+    <a th:href="@{/dashboard}" class="btn">🏠 Back to Dashboard</a>
+</div>
 </body>
 </html>

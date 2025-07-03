@@ -2,113 +2,144 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login - Student Performance Tracker</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(120deg, #2d6cdf 0%, #6ec6ff 100%);
+        * {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
         header {
             text-align: center;
-            color: #fff;
-            margin-top: 2em;
-            margin-bottom: 1em;
+            margin-bottom: 1.5em;
+            padding: 0 20px;
         }
+
+        header h1 {
+            font-size: 2em;
+            font-weight: 700;
+            color: #1e88e5;
+        }
+
+        header h2 {
+            font-size: 1em;
+            font-weight: 400;
+            margin-top: 0.5em;
+            color: #424242;
+        }
+
         .container {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 40px 30px;
             max-width: 400px;
-            margin: 2em auto;
-            background: #fff;
-            border-radius: 14px;
-            box-shadow: 0 4px 24px rgba(44,108,223,0.13);
-            padding: 2.5em 2em 2em 2em;
-            position: relative;
+            width: 90%;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
-        .side-emoji {
-            position: absolute;
-            top: 20px;
-            right: -80px;
-            font-size: 4em;
-            filter: drop-shadow(0 2px 8px rgba(44,108,223,0.15));
-            user-select: none;
-            pointer-events: none;
-        }
+
         form {
             display: flex;
             flex-direction: column;
             gap: 1.2em;
         }
+
         label {
             font-weight: 600;
-            color: #2d6cdf;
+            color: #1e88e5;
         }
-        input[type="text"], input[type="password"] {
+
+        input[type="text"],
+        input[type="password"] {
             padding: 0.7em;
-            border: 1px solid #b3c6e0;
-            border-radius: 6px;
+            border: 1px solid #b0bec5;
+            border-radius: 8px;
             font-size: 1em;
-            background: #f6f8fa;
-            transition: border 0.2s;
+            background: #f9f9f9;
+            color: #333;
         }
-        input[type="text"]:focus, input[type="password"]:focus {
-            border: 1.5px solid #2d6cdf;
+
+        input:focus {
+            border-color: #1e88e5;
             outline: none;
+            background-color: #fff;
         }
+
         .btn {
-            background: #2d6cdf;
+            background: #1e88e5;
             color: #fff;
             border: none;
-            border-radius: 6px;
-            padding: 0.8em 0;
-            font-size: 1.1em;
+            border-radius: 8px;
+            padding: 0.8em;
+            font-size: 1.05em;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(44,108,223,0.10);
-            transition: background 0.2s;
+            transition: background 0.2s ease;
         }
+
         .btn:hover {
-            background: #1b4fa0;
+            background: #1565c0;
         }
+
         p {
             text-align: center;
             margin-top: 1.5em;
             color: #555;
         }
+
         a {
-            color: #2d6cdf;
+            color: #1e88e5;
             text-decoration: none;
             font-weight: 600;
         }
+
         a:hover {
             text-decoration: underline;
         }
-        @media (max-width: 700px) {
-            .side-emoji {
-                display: none;
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.7em;
             }
             .container {
-                margin: 1em;
+                padding: 25px 20px;
             }
         }
     </style>
 </head>
+
 <body>
 <header>
     <h1>🔐 Login to Your Account</h1>
-    <h2 style="font-size:1.1em; font-weight:400; margin-top:0.5em;">Welcome back to the Student Performance Tracker! 🎓</h2>
+    <h2>Welcome back to the Student Performance Tracker! 🎓</h2>
 </header>
-<div class="container">
 
+<div class="container">
     <form th:action="@{/login}" method="post">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" required />
+        <input type="text" id="username" name="username" placeholder="Enter your username" required />
 
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required />
+        <input type="password" id="password" name="password" placeholder="Enter your password" required />
 
         <button type="submit" class="btn">Login</button>
     </form>
+
     <p>Don't have an account? <a th:href="@{/register}">Register</a></p>
 </div>
 </body>

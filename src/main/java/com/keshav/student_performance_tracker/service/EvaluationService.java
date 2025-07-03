@@ -78,4 +78,6 @@ public class EvaluationService {
         else if (total >= 12) return "B+";
         else return "B";
     }
+    // In EvaluationService.java
+
 }
