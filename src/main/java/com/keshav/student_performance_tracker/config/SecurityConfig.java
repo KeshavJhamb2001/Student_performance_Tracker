@@ -24,6 +24,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/css/**", "/js/**", "/images/**").permitAll() // Allow home and static resources
                         .requestMatchers("/api/users/register", "/api/users/login").permitAll()
+                        .requestMatchers("/register", "/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/events").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/events/**").permitAll()
                         .requestMatchers("/api/participations").hasRole("STUDENT")
