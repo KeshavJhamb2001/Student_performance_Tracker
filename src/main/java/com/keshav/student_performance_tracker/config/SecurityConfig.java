@@ -25,6 +25,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/css/**", "/js/**", "/images/**").permitAll() // Allow home and static resources
                         .requestMatchers("/api/users/register", "/api/users/login").permitAll()
                         .requestMatchers("/register", "/login").permitAll()
+
                         .requestMatchers(HttpMethod.GET, "/api/events").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/events/**").permitAll()
                         .requestMatchers("/api/participations").hasRole("STUDENT")
@@ -34,12 +35,14 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 );
           http
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/dashboard", true)
-                        .permitAll()
-                )
-                .httpBasic(customizer -> {});
+                  .formLogin(form -> form
+                          .loginPage("/login")
+                          .defaultSuccessUrl("/dashboard", true)
+                          .failureUrl("/login?error=true")  // 👈 ADD THIS LINE
+                          .permitAll()
+                  )
+
+                  .httpBasic(customizer -> {});
         return http.build();
     }
 

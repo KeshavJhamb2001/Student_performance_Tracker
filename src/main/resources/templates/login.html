@@ -53,6 +53,20 @@
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
 
+        .message {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 1em;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+
         form {
             display: flex;
             flex-direction: column;
@@ -130,9 +144,16 @@
 </header>
 
 <div class="container">
+
+    <!-- Error Message for Invalid Credentials -->
+    <div th:if="${param.error}" class="message error">
+        Invalid username or password!
+    </div>
+
+
     <form th:action="@{/login}" method="post">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" placeholder="Enter your username" required />
+        <input type="text" id="username" name="username" placeholder="Enter your email" required />
 
         <label for="password">Password</label>
         <input type="password" id="password" name="password" placeholder="Enter your password" required />
