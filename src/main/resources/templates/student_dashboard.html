@@ -199,6 +199,7 @@
       <a th:href="@{/student/events}" class="btn">📅 Join Event</a>
       <a th:href="@{/student/registered-events}" class="btn">🗂️ My Events</a>
       <a th:href="@{/student/evaluations}" class="btn">📊 My Evaluations</a>
+      <button class="btn" onclick="startListening()">🎤 Speak Command</button>
     </div>
   </header>
 
@@ -220,6 +221,24 @@
       🌟 Stay curious, keep participating, and build your academic journey — one step at a time!
     </p>
   </div>
+
+  <!-- ✅ Voice Status -->
+  <div class="info" style="margin-top: 2em;">
+    <h3>🎙️ Voice Command Status</h3>
+    <p><strong>Status:</strong> <span id="status">Not Listening</span></p>
+    <p><strong>You said:</strong> <span id="transcript">N/A</span></p>
+  </div>
+
+  <!-- ✅ Supported Commands -->
+  <div class="info" style="margin-top: 1em;">
+    <h3>📋 Supported Voice Commands</h3>
+    <ul>
+      <li>Say <strong>“join event”</strong> → Go to Join Event page</li>
+      <li>Say <strong>“my events”</strong> → View your registered events</li>
+      <li>Say <strong>“my evaluations”</strong> or <strong>“results”</strong> → See your performance</li>
+      <li>Say <strong>“logout”</strong> → Log out of the dashboard</li>
+    </ul>
+  </div>
 </div>
 
 <!-- ✅ Profile Dropdown Script -->
@@ -233,6 +252,44 @@
     if (!event.target.closest('.profile')) {
       document.getElementById("profileDropdown").style.display = "none";
     }
+  };
+</script>
+
+<!-- ✅ Voice Command Script -->
+<script>
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+
+  recognition.continuous = false;
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+
+  function startListening() {
+    document.getElementById("status").innerText = "Listening...";
+    recognition.start();
+  }
+
+  recognition.onresult = function(event) {
+    const speechResult = event.results[0][0].transcript.toLowerCase();
+    document.getElementById("transcript").innerText = speechResult;
+    document.getElementById("status").innerText = "Finished Listening";
+
+    // Command routing
+    if (speechResult.includes("join")) {
+      window.location.href = "/student/events";
+    } else if (speechResult.includes("my events")) {
+      window.location.href = "/student/registered-events";
+    } else if (speechResult.includes("evaluation") || speechResult.includes("result")) {
+      window.location.href = "/student/evaluations";
+    } else if (speechResult.includes("logout")) {
+      window.location.href = "/";
+    } else {
+      alert("No matching page for: " + speechResult);
+    }
+  };
+
+  recognition.onerror = function(event) {
+    document.getElementById("status").innerText = "Error: " + event.error;
   };
 </script>
 
